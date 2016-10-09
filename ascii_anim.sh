@@ -59,5 +59,5 @@ do
   fi
 done
 
-# The stty -echo option makes the shell stop displaying what you type??
-reset
+# The stty -echo option makes the shell stop displaying what you type with -echo
+stty echo
