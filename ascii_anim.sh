@@ -25,38 +25,39 @@ start_line=2  # Numbered starting from 1, Line 1 is page_lines #
 let end_line=page_lines+1
 buffer=0
 
+if [ -t 0 ]; then stty -echo -icanon -icrnl time 0 min 0; fi
+
 # While loop runs until the first line to print exceeds the number of file lines
 while [ $start_line -lt $line_num ]
 do
-  # If the last line to print exceeds the number of lines in the file, calculates the overflow and stores it in buffer var. Also sets end_line var to number of file lines
-  if [ $end_line -ge $line_num ]
+  keypress="`cat -v`"
+  if [ "x$keypress" != "xq" ]
   then
-    let buffer=end_line-line_num
-    end_line=line_num
-  fi
+    # If the last line to print exceeds the number of lines in the file, calculates the overflow and stores it in buffer var. Also sets end_line var to number of file lines
+    if [ $end_line -ge $line_num ]
+    then
+      let buffer=end_line-line_num
+      end_line=line_num
+    fi
 
-  # Breaks loop if "q" is pressed.
-  # The read timeout command can wait minimum 1s... very slow paging...
-  read -t 1 -n 1 key
+    # Prints every 0.1 seconds
+    sleep 0.1
+    # Prints a range of lines. Lines are numbered from 1 onward, with sed printing [i, j)
+    sed -n "${start_line},${end_line}p" $file
+    # If buffer is not 0, then we reached end of file and there wasn't enough to fill the screen, print new lines
+    while [ $buffer -gt 0 ]
+    do
+      printf "\n"
+      let buffer=buffer-1
+    done
 
-  if [[ $key = q ]]
-  then
+    # Increment start and end line ranges
+    let start_line=start_line+page_lines
+    let end_line=end_line+page_lines
+  else
     break
   fi
-
-  # Prints every 0.1 seconds
-  #sleep 0.1
-  # Prints a range of lines. Lines are numbered from 1 onward, with sed printing [i, j)
-  sed -n "${start_line},${end_line}p" $file
-  # If buffer is not 0, then we reached end of file and there wasn't enough to fill the screen, print new lines
-  while [ $buffer -gt 0 ]
-  do
-    printf "\n"
-    let buffer=buffer-1
-  done
-
-  # Increment start and end line ranges
-  let start_line=start_line+page_lines
-  let end_line=end_line+page_lines
 done
 
+# The stty -echo option makes the shell stop displaying what you type??
+reset
