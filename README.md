@@ -8,4 +8,7 @@ To run it, use the following command:
 
 ```./ascii_anim.sh datboi.txt```
 
+To run the animation "forever" aka to repeat it use "r" as the second argument:
+```./ascii_anim.sh datboi.txt r```
+
 To quit the animation early, press "q" or CTRL-C
