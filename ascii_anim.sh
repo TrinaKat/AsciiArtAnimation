@@ -2,7 +2,7 @@
 
 file=$1
 
-# Get number of liens in file
+# Get number of lines in file
 line_num=$(wc -l $file | awk {'print $1'})
 # Read first line of file to get page size
 page_lines=$(head -n 1 $file)
@@ -39,7 +39,7 @@ do
       if [ $end_line -ge $line_num ]
       then
         let buffer=end_line-line_num
-        end_line=line_num
+        let end_line=line_num
       fi
 
       # Prints every 0.1 seconds
