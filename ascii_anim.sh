@@ -32,7 +32,7 @@ do
   # While loop runs until the first line to print exceeds the number of file lines
   while [ $start_line -lt $line_num ]
   do
-    keypress="`cat -v`"
+    keypress="`cat`"
     if [ "x$keypress" != "xq" ]
     then
       # If the last line to print exceeds the number of lines in the file, calculates the overflow and stores it in buffer var. Also sets end_line var to number of file lines
@@ -61,7 +61,8 @@ do
     fi
   done
 
-  if [ $# -lt 2 ]; then break
+  if [ "x$keypress" == "xq" ]; then break
+  elif [ $# -lt 2 ]; then break
   elif [ $2 == "r" ]; then continue
   else break
   fi
