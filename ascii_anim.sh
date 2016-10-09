@@ -1,6 +1,33 @@
 #!/bin/bash
 
 file=$1
+speed=0.1
+repeat="no"
+num='^[0-9]+([.][0-9]+)?$'
+
+if [ $# -eq 3 ]; then
+	if [ $2 == "r" ]; then
+		repeat=$2
+	else
+		echo "$2 should be \"r\" if you wish to repeat the animation"
+		exit
+	fi
+	if [[ $3 =~ $num ]]; then
+		speed=$3
+	else
+		echo "$3 is not a valid speed"
+		exit
+	fi
+elif [ $# -eq 2 ]; then
+	if [ $2 == "r" ]; then
+		repeat=$2
+	elif [[ $2 =~ $num ]]; then
+		speed=$2
+	else
+		echo "$2 is not a valid argument (for repeating or speed)"
+		exit
+	fi
+fi
 
 # Get number of lines in file
 line_num=$(wc -l $file | awk {'print $1'})
@@ -43,7 +70,7 @@ do
       fi
 
       # Prints every 0.1 seconds
-      sleep 0.1
+      sleep $speed
       # Prints a range of lines. Lines are numbered from 1 onward, with sed printing [i, j)
       sed -n "${start_line},${end_line}p" $file
       # If buffer is not 0, then we reached end of file and there wasn't enough to fill the screen, print new lines
@@ -62,8 +89,7 @@ do
   done
 
   if [ "x$keypress" == "xq" ]; then break
-  elif [ $# -lt 2 ]; then break
-  elif [ $2 == "r" ]; then continue
+  elif [ $repeat == "r" ]; then continue
   else break
   fi
 
