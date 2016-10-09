@@ -1,5 +1,5 @@
-# AsciiArtAnimation
-Animates ascii art from a text file
+# ASCIIArtAnimation
+Animates ASCII art from a text file
 
 # Instructions
 The first line of the text file must contain the number of lines per "page" or "frame." This includes any blank lines separating each page/frame. See datboi.txt for an example :)
@@ -21,3 +21,12 @@ To combine both repeating and changing the speed, put "r" as the first argument:
 ```./ascii_anim.sh datboi.txt r 0.1```
 
 To quit the animation early, press "q" or CTRL-C
+
+# Making your own ASCII Art
+Some sites you can use to convert images to ASCII are below:
+
+http://glassgiant.com/ascii/
+http://www.ascii-art-generator.org/
+http://ascii.mastervb.net/
+http://www.degraeve.com/img2txt.php
+http://picascii.com/
