@@ -15,6 +15,9 @@ let screen_h=page_lines+1
 # Resize shell to screen_w x screen_h
 printf "\e[8;${screen_h};${screen_w}t"
 
+# Reposition terminal
+#printf '\e[3;500;100t'
+
 clear
 
 # Set variables for range of lines to print
@@ -32,8 +35,17 @@ do
     end_line=line_num
   fi
 
+  # Breaks loop if "q" is pressed.
+  # The read timeout command can wait minimum 1s... very slow paging...
+  read -t 1 -n 1 key
+
+  if [[ $key = q ]]
+  then
+    break
+  fi
+
   # Prints every 0.1 seconds
-  sleep 0.1
+  #sleep 0.1
   # Prints a range of lines. Lines are numbered from 1 onward, with sed printing [i, j)
   sed -n "${start_line},${end_line}p" $file
   # If buffer is not 0, then we reached end of file and there wasn't enough to fill the screen, print new lines
@@ -47,3 +59,4 @@ do
   let start_line=start_line+page_lines
   let end_line=end_line+page_lines
 done
+
