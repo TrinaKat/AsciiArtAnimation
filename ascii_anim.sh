@@ -32,6 +32,11 @@ if [[ ! $speed =~ $num ]]; then
   exit 1
 fi
 
+if [ ! -f $file ]; then
+  echo "$file does not exist!"
+  exit 1
+fi
+
 # Get number of lines in file
 line_num=$(wc -l $file | awk {'print $1'})
 # Read first line of file to get page size
