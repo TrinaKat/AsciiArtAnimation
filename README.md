@@ -4,7 +4,7 @@ Animates ASCII art from a text file! Ooo so exciting!
 # Instructions
 The first line of the text file must contain the number of lines per "page" or "frame." This includes any blank lines separating each page/frame. See datboi.txt for an example :)
 
-To run it, use the following command:
+To run it, set which file to animate with the "-f" option. This is required to pass in the file. You can use the command as follows:
 
 ```./ascii_anim.sh -f datboi.txt```
 
@@ -22,7 +22,7 @@ All the options can be used together in any order... so long as -f and -s are fo
 
 To quit the animation early, press "q" or CTRL-C.
 
-If you just run the script, then it will try to animate datboi.txt at 0.1s without repeating. If it cannoy find datboi.txt, it will stop running.
+If you just run the script, then it will try to animate datboi.txt at 0.1s without repeating. If it cannot find datboi.txt, it will stop running.
 
 ```./ascii_anim.sh ```
 
