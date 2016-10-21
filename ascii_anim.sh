@@ -1,32 +1,35 @@
 #!/bin/bash
 
-file=$1
+file=datboi.txt
 speed=0.1
-repeat="no"
+repeat=false
 num='^[0-9]+([.][0-9]+)?$'
 
-if [ $# -eq 3 ]; then
-	if [ $2 == "r" ]; then
-		repeat=$2
-	else
-		echo "$2 should be \"r\" if you wish to repeat the animation"
-		exit
-	fi
-	if [[ $3 =~ $num ]]; then
-		speed=$3
-	else
-		echo "$3 is not a valid speed"
-		exit
-	fi
-elif [ $# -eq 2 ]; then
-	if [ $2 == "r" ]; then
-		repeat=$2
-	elif [[ $2 =~ $num ]]; then
-		speed=$2
-	else
-		echo "$2 is not a valid argument (for repeating or speed)"
-		exit
-	fi
+while getopts ":rs:f:" opt; do
+  case $opt in
+    r)
+      repeat=true
+      ;;
+    s)
+      speed=$OPTARG
+      ;;
+    f)
+      file=$OPTARG
+      ;;
+    \?)
+      echo -e "Invalid option -$OPTARG. Allowed options are as follows: \n\t-f which is required to pass in the file to animate (requires parameter)\n\t-r for repeating\n\t-s for changing speed (requires parameter)"
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument."
+      exit 1
+      ;;
+  esac
+done
+
+if [[ ! $speed =~ $num ]]; then
+  echo "$speed is not a valid speed."
+  exit 1
 fi
 
 # Get number of lines in file
@@ -89,7 +92,7 @@ do
   done
 
   if [ "x$keypress" == "xq" ]; then break
-  elif [ $repeat == "r" ]; then continue
+  elif [ "$repeat" == true ]; then continue
   else break
   fi
 
