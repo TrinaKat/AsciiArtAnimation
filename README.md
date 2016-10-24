@@ -35,6 +35,19 @@ You can then run the script with the same options like so:
 
 ```animate -f datboi.txt -r -s 0.1```
 
+# Python Version
+A python version of the script has been added. It does NOT have the option to quit with "q", it can only be exited with CTRL-C or naturally when the animation runs out. 
+
+To run, the same options are enabled, with -r for repeat and -s for speed. The -f option is unnecessary, you can just pass in the file as argument.
+
+```./ascii_anim.py datboi.txt -r -s 0.1```
+
+The script can also be run as follows:
+
+```python ascii_anim.py datboi.txt```
+
+There is no default file for the python script, it must be passed one.
+
 # Making your own ASCII Art
 Some sites you can use to convert images to ASCII are below:
 
