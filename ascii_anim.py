@@ -6,12 +6,9 @@ from time import sleep
 
 class anim:
     def __init__(self, file):
-        if (file == "-"):
-            self.lines = sys.stdin.readLines()
-        else:
-            f = open(file, 'r')
-            self.lines = f.readlines()
-            f.close()
+        f = open(file, 'r')
+        self.lines = f.readlines()
+        f.close()
 
 def main():
     version_msg = "%prog 1.0"
